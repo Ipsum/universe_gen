@@ -2,8 +2,8 @@
 #define __BUILD_WORLD_H__
 
 
-#define UNIVERSE_SIZE 10000
-#define MAX_PLANETS 20
+#define UNIVERSE_SIZE 1
+#define MAX_PLANETS 2
 
 #define MAX_RADIUS 10000
 #define MAX_AZIMUTH M_PI/8

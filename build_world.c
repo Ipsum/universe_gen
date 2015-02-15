@@ -35,6 +35,7 @@ Universe_t* build_universe(void)
 
 void print_universe(Universe_t *universe)
 {
+    Planet_t *planet;
     int i,j;
     for(i=0; i<universe->size; i++)
     {
@@ -42,6 +43,26 @@ void print_universe(Universe_t *universe)
         printf("Radius=%lf,Angle=%lf,Azimuth=%lf\n",universe->nodes[i]->radius,
                                                     universe->nodes[i]->angle,
                                                     universe->nodes[i]->azimuth);
+        printf("Star:\n-temp: %d (K)\n-color: %d (RED-BLUE)\n-mass: %d(SUNS*100)\n-radius: %ld (SUNS*100)\n",
+                universe->nodes[i]->star->temperature,
+                universe->nodes[i]->star->color,
+                universe->nodes[i]->star->mass,
+                universe->nodes[i]->star->radius);
+        printf("n_planets= %d\n",universe->nodes[i]->n_planets);
+        for(j=0; j<universe->nodes[i]->n_planets; j++)
+        {
+            planet = universe->nodes[i]->planets[j];
+            printf("Planet %d\n",j);
+            printf("-mass: %d (Yg)\n",planet->mass);
+            printf("-orbit_radius: %d (Mm)\n",planet->orbit_radius);
+            printf("-period: %d (s)\n",planet->period);
+            printf("-temperature: %d (K)\n",planet->temperature);
+            printf("-albedo: %d (\%)\n",planet->albedo);
+            printf("-absorption: %d (\%)\n",planet->absorption);
+            printf("-greenhouse: %d (Constant)\n",planet->greenhouse);
+            printf("-atmosphere: %d (NONE,NORMAL)\n",planet->atmosphere);
+            printf("-seed: %d (Yg)\n",planet->seed);
+        }
     }
 }
 #if 0
@@ -77,7 +98,7 @@ Node_t* build_node(int id)
     new_node->radius = rand() / (double)(RAND_MAX/MAX_RADIUS);
     new_node->angle =  rand() / (RAND_MAX/(2*M_PI));
     new_node->azimuth = rand() / (RAND_MAX/(MAX_AZIMUTH));
-
+    new_node->n_planets = rand() % MAX_PLANETS;
     if(rand() % 2)
         new_node->azimuth = (2*M_PI) - new_node->azimuth;
     
@@ -142,7 +163,7 @@ int build_planets(Node_t* new_node)
 
    for(i=0; i < new_node->n_planets; i++)
    {
-       new_planet = NULL;
+       new_planet = calloc(1, sizeof(Planet_t));
        new_planet->mass = (rand() % 1000) + 1;
        new_planet->orbit_radius = prev_radius + (rand() % 1000000) + 100000;
        prev_radius = new_planet->orbit_radius;
@@ -156,7 +177,7 @@ int build_planets(Node_t* new_node)
        // T = ( SQRT(R^3) * 2 * R_PI ) / (8.167*10^9) * SQRT(MASS) )
        new_planet->period = (sqrt(new_planet->orbit_radius^3) * 2 * M_PI) / 
                             (8.167*pow(10.0,9.0) * sqrt(new_planet->mass));
-       if(new_planet->atmosphere)
+       if(new_planet->atmosphere == ATM_STANDARD)
        {
            new_planet->albedo = rand() % 100;
            new_planet->absorption = rand() % 100;
@@ -171,7 +192,7 @@ int build_planets(Node_t* new_node)
        //Calculate surface temp
        //T = TG + Tsun SQRT( rsun SQRT(1 - ALPHA - BETA / 2) / 2d )
        new_planet->temperature = new_planet->greenhouse + new_node->star->temperature * 
-                                 sqrt(new_node->star->radius *
+                                 sqrt((new_node->star->radius/100*pow(10.0,8.0)) *
                                  sqrt(1 - new_planet->albedo - new_planet->absorption / 2) / 
                                  (1.4*sqrt(new_planet->orbit_radius)*pow(10.0,3.0)));
    
