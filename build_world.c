@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
     Universe_t *universe;
     
-    srand(time(NULL)); 
+    srandom(time(NULL)); 
     universe = build_universe();
     
     print_universe(universe);
@@ -55,13 +55,13 @@ void print_universe(Universe_t *universe)
             printf("Planet %d\n",j);
             printf("-mass: %d (Yg)\n",planet->mass);
             printf("-orbit_radius: %d (Mm)\n",planet->orbit_radius);
-            printf("-period: %d (s)\n",planet->period);
-            printf("-temperature: %d (K)\n",planet->temperature);
-            printf("-albedo: %d (\%)\n",planet->albedo);
-            printf("-absorption: %d (\%)\n",planet->absorption);
+            printf("-period: %ld (s)\n",planet->period);
+            printf("-temperature: %lf (K)\n",planet->temperature);
+            printf("-albedo: %d \n",planet->albedo);
+            printf("-absorption: %d \n",planet->absorption);
             printf("-greenhouse: %d (Constant)\n",planet->greenhouse);
             printf("-atmosphere: %d (NONE,NORMAL)\n",planet->atmosphere);
-            printf("-seed: %d (Yg)\n",planet->seed);
+            printf("-seed: %d\n",planet->seed);
         }
     }
 }
@@ -95,11 +95,12 @@ Node_t* build_node(int id)
     Node_t *new_node;
     new_node = calloc(1, sizeof(Node_t));
     new_node->id = id;
-    new_node->radius = rand() / (double)(RAND_MAX/MAX_RADIUS);
-    new_node->angle =  rand() / (RAND_MAX/(2*M_PI));
-    new_node->azimuth = rand() / (RAND_MAX/(MAX_AZIMUTH));
-    new_node->n_planets = rand() % MAX_PLANETS;
-    if(rand() % 2)
+    new_node->radius = random() / (double)(RAND_MAX/MAX_RADIUS);
+    new_node->angle =  random() / (RAND_MAX/(2*M_PI));
+    new_node->azimuth = random() / (RAND_MAX/(MAX_AZIMUTH));
+    new_node->n_planets = random() % MAX_PLANETS;
+    new_node->n_planets =1; 
+    if(random() % 2)
         new_node->azimuth = (2*M_PI) - new_node->azimuth;
     
     build_star(new_node);
@@ -112,43 +113,43 @@ int build_star(Node_t* new_node)
 {
     Star_t *new_star;
     new_star = calloc(1, sizeof(Star_t));
-    new_star->color = rand() % 7;
+    new_star->color = random() % 7;
     switch(new_star->color)
     {
         case RED:
-            new_star->temperature = (rand() % 1300) + 2400;
-            new_star->mass = (rand() % 37)  + 8;
-            new_star->radius = (((rand() % 37)  + 8)/100) * 10^9;
+            new_star->temperature = (random() % 1300) + 2400;
+            new_star->mass = (random() % 37)  + 8;
+            new_star->radius = (((random() % 37)  + 8)/100) * 10^9;
             break;
         case ORANGE:
-            new_star->temperature = (rand() % 2500) + 3700;
-            new_star->mass = (rand() % 35)  + 45;
-            new_star->radius = (((rand() % 35)  + 45)/100) * 10^9;
+            new_star->temperature = (random() % 2500) + 3700;
+            new_star->mass = (random() % 35)  + 45;
+            new_star->radius = (((random() % 35)  + 45)/100) * 10^9;
             break;
         case YELLOW:
-            new_star->temperature = (rand() % 800) + 5200;
-            new_star->mass = (rand() % 24)  + 80;
-            new_star->radius = (((rand() % 24)  + 80)/100) * 10^9;
+            new_star->temperature = (random() % 800) + 5200;
+            new_star->mass = (random() % 24)  + 80;
+            new_star->radius = (((random() % 24)  + 80)/100) * 10^9;
             break;
         case YELLOW_WHITE:
-            new_star->temperature = (rand() % 1500) + 6000;
-            new_star->mass = (rand() % 36)  + 104;
-            new_star->radius = (((rand() % 36)  + 104)/100) * 10^9;
+            new_star->temperature = (random() % 1500) + 6000;
+            new_star->mass = (random() % 36)  + 104;
+            new_star->radius = (((random() % 36)  + 104)/100) * 10^9;
             break;
         case WHITE:
-            new_star->temperature = (rand() % 2500) + 7500;
-            new_star->mass = (rand() % 70)  + 140;
-            new_star->radius = (((rand() % 70)  + 140)/100) * 10^9;
+            new_star->temperature = (random() % 2500) + 7500;
+            new_star->mass = (random() % 70)  + 140;
+            new_star->radius = (((random() % 70)  + 140)/100) * 10^9;
             break;
         case BLUE_WHITE:
-            new_star->temperature = (rand() % 20000) + 10000;
-            new_star->mass = (rand() % 1390)  + 210;
-            new_star->radius = (((rand() % 1390)  + 210)/100) * 10^9;
+            new_star->temperature = (random() % 20000) + 10000;
+            new_star->mass = (random() % 1390)  + 210;
+            new_star->radius = (((random() % 1390)  + 210)/100) * 10^9;
             break;
         case BLUE:
-            new_star->temperature = (rand() % 30000) + 30000;
-            new_star->mass = (rand() % 2000)  + 1390;
-            new_star->radius = (((rand() % 2000)  + 1390)/100) * 10^9;
+            new_star->temperature = (random() % 30000) + 30000;
+            new_star->mass = (random() % 2000)  + 1390;
+            new_star->radius = (((random() % 2000)  + 1390)/100) * 10^9;
     }
 
     new_node->star = new_star;
@@ -164,10 +165,14 @@ int build_planets(Node_t* new_node)
    for(i=0; i < new_node->n_planets; i++)
    {
        new_planet = calloc(1, sizeof(Planet_t));
-       new_planet->mass = (rand() % 1000) + 1;
-       new_planet->orbit_radius = prev_radius + (rand() % 1000000) + 100000;
+       new_planet->mass = (random() % 1000) + 10;
+       new_planet->orbit_radius = prev_radius + (random() % 1000000) + 100000;
        prev_radius = new_planet->orbit_radius;
-       new_planet->atmosphere = rand() % 2;
+       if((random() % 100) >= 40)
+           new_planet->atmosphere = ATM_STANDARD;
+       else
+           new_planet->atmosphere = ATM_NONE;
+       
        //Calculate orbital speed
        // G = 6.67 x 10^19 Mm^2N/Yg^2
        // T^2 = (R^3 * 4 * R_PI^2) / (G * new_star->mass)
@@ -175,13 +180,18 @@ int build_planets(Node_t* new_node)
        // T = SQRT(R^3 * 4 * R_PI^2) / SQRT(G) * SQRT(MASS)
        // T = ( SQRT(R^3) * SQRT(4) * SQRT(R_PI^2) ) / ( SQRT(G) * SQRT(MASS) )
        // T = ( SQRT(R^3) * 2 * R_PI ) / (8.167*10^9) * SQRT(MASS) )
-       new_planet->period = (sqrt(new_planet->orbit_radius^3) * 2 * M_PI) / 
-                            (8.167*pow(10.0,9.0) * sqrt(new_planet->mass));
+       
+       long double mass_s = new_node->star->mass/100.0 * 1.989*pow(10,30);
+       long double radius_e = new_planet->orbit_radius * pow(10,6);
+       long double r = sqrt(pow(radius_e,3));
+       long double mass = sqrt(mass_s);
+       new_planet->period = ( r*2*M_PI )/( 8.167*pow(10,-6) * mass );
+
        if(new_planet->atmosphere == ATM_STANDARD)
        {
-           new_planet->albedo = rand() % 100;
-           new_planet->absorption = rand() % 100;
-           new_planet->greenhouse = (rand() % 25) + 20;
+           new_planet->albedo = random() % 50;
+           new_planet->absorption = random() % 50;
+           new_planet->greenhouse = (random() % 25) + 20;
        }
        else
        {
@@ -191,12 +201,26 @@ int build_planets(Node_t* new_node)
        }
        //Calculate surface temp
        //T = TG + Tsun SQRT( rsun SQRT(1 - ALPHA - BETA / 2) / 2d )
-       new_planet->temperature = new_planet->greenhouse + new_node->star->temperature * 
-                                 sqrt((new_node->star->radius/100*pow(10.0,8.0)) *
-                                 sqrt(1 - new_planet->albedo - new_planet->absorption / 2) / 
-                                 (1.4*sqrt(new_planet->orbit_radius)*pow(10.0,3.0)));
+       new_planet->albedo = 31;
+       new_planet->absorption = 26;
+       new_planet->greenhouse = 36;
+       new_planet->orbit_radius = 149600;
+       new_node->star->radius = 100;
+       new_node->star->temperature=6000;
+       
+       double ab = (1.0 - new_planet->albedo/100.0 - new_planet->absorption/100.0 );
+       double d = ( new_planet->orbit_radius * pow(10,6) );
+       double rsun = ( (double)new_node->star->radius/100.0 * 6.963 * powl(10,8) );
+
+       printf("rsun: %lf\n",rsun);
+       new_planet->temperature = new_planet->greenhouse + new_node->star->temperature *
+                                 sqrt( rsun * sqrt(ab/2.0) / (2.0*d));
+       //new_planet->temperature = new_planet->greenhouse + new_node->star->temperature * 
+       //                          sqrt((new_node->star->radius/100*pow(10.0,8.0)) *
+       //                          sqrt(1 - new_planet->albedo - new_planet->absorption / 2) / 
+       //                          (1.4*sqrt(new_planet->orbit_radius)*pow(10.0,3.0)));
    
-       new_planet->seed = rand();
+       new_planet->seed = random();
        new_node->planets[i] = new_planet;
    }
    return SUCCESS;
@@ -258,27 +282,27 @@ int is_pair(Node_t* node1, Node_t* node2)
     return 0;
 }
 
-//Find random unfilled node
-Node_t* choose_random(Universe_t* universe)
+//Find randomom unfilled node
+Node_t* choose_randomom(Universe_t* universe)
 {
-    int random;
+    int randomom;
     int i = 0;
     int j;
     
     if(universe->size == 0)
         return NULL;
 
-    random = rand() % universe->size;
-    for(random; i < universe->size; i++)
+    randomom = random() % universe->size;
+    for(randomom; i < universe->size; i++)
     {
-        if( (random+i) >= universe->size)
-            random = 0;
+        if( (randomom+i) >= universe->size)
+            randomom = 0;
         
-        for(j=0; j < universe->nodes[random+i]->n_exits; j++)
+        for(j=0; j < universe->nodes[randomom+i]->n_exits; j++)
         {
-            if(universe->nodes[random+i]->exits[j] == NULL)
+            if(universe->nodes[randomom+i]->exits[j] == NULL)
             {
-                return universe->nodes[random+i];
+                return universe->nodes[randomom+i];
             }
         }
     }

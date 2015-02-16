@@ -36,8 +36,8 @@ typedef struct {
 typedef struct {
     int mass; //Yottagrams
     int orbit_radius; //megameters
-    int period; //megameters/hour
-    int temperature; //C
+    long period; //megameters/hour
+    double temperature; //C
     int albedo;
     int absorption;
     int greenhouse; 
