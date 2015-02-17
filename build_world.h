@@ -2,8 +2,8 @@
 #define __BUILD_WORLD_H__
 
 
-#define UNIVERSE_SIZE 1
-#define MAX_PLANETS 2
+#define UNIVERSE_SIZE 5
+#define MAX_PLANETS 4
 
 #define MAX_RADIUS 10000
 #define MAX_AZIMUTH M_PI/8
@@ -62,6 +62,7 @@ typedef struct {
 } Universe_t;
 
 
+void dump_json(const char *filename, Universe_t *universe);
 int build_links(Universe_t* universe);
 Universe_t* build_universe(void);
 void print_universe(Universe_t *universe);
