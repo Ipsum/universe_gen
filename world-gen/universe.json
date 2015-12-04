@@ -1,0 +1,127 @@
+{
+"version":1,
+"size":5,
+"name":"hillsverse",
+"nodes":[{
+ "id":0,
+ "n_planets":3,
+ "radius":9974.993178,
+ "angle":3.413305,
+ "azimuth":0.305142,
+ "star":{
+  "temperature":4235,
+  "color":1,
+  "mass":45,
+  "radius":9
+ },
+ "planets":[ {
+   "mass":519,
+   "orbit_radius":170796,
+   "period":57399777,
+   "temperature":48.234916,
+   "albedo":0,
+   "absorption":0,
+   "greenhouse":0,
+   "atmosphere":0,
+   "seed":1117073762
+  }, {
+   "mass":739,
+   "orbit_radius":529608,
+   "period":313419107,
+   "temperature":27.391960,
+   "albedo":0,
+   "absorption":0,
+   "greenhouse":0,
+   "atmosphere":0,
+   "seed":1380635215
+  }, {
+   "mass":318,
+   "orbit_radius":1189356,
+   "period":1054778979,
+   "temperature":18.278663,
+   "albedo":0,
+   "absorption":0,
+   "greenhouse":0,
+   "atmosphere":0,
+   "seed":61546367
+  }
+  ]
+},{
+ "id":1,
+ "n_planets":0,
+ "radius":7896.145585,
+ "angle":3.243242,
+ "azimuth":0.068938,
+ "star":{
+  "temperature":2841,
+  "color":0,
+  "mass":30,
+  "radius":9
+ },
+ "planets":[
+  ]
+},{
+ "id":2,
+ "n_planets":2,
+ "radius":6119.452638,
+ "angle":4.836534,
+ "azimuth":0.297030,
+ "star":{
+  "temperature":20236,
+  "color":5,
+  "mass":865,
+  "radius":159
+ },
+ "planets":[ {
+   "mass":753,
+   "orbit_radius":426534,
+   "period":51668083,
+   "temperature":511.532820,
+   "albedo":11,
+   "absorption":48,
+   "greenhouse":21,
+   "atmosphere":1,
+   "seed":1045637125
+  }, {
+   "mass":193,
+   "orbit_radius":1489700,
+   "period":337240787,
+   "temperature":267.759720,
+   "albedo":33,
+   "absorption":36,
+   "greenhouse":23,
+   "atmosphere":1,
+   "seed":1067264107
+  }
+  ]
+},{
+ "id":3,
+ "n_planets":0,
+ "radius":2190.208076,
+ "angle":3.409315,
+ "azimuth":6.147664,
+ "star":{
+  "temperature":4891,
+  "color":1,
+  "mass":77,
+  "radius":9
+ },
+ "planets":[
+  ]
+},{
+ "id":4,
+ "n_planets":0,
+ "radius":438.028526,
+ "angle":5.383494,
+ "azimuth":6.255981,
+ "star":{
+  "temperature":10765,
+  "color":5,
+  "mass":1332,
+  "radius":89
+ },
+ "planets":[
+  ]
+}
+]
+}
