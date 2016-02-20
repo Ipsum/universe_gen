@@ -1,2 +1,2 @@
 # universe_gen
-Generates a random universe populated with stars and planets with accurate orbits and plausable atmospheres using the power of MATH
+Generates a random universe populated with stars and planets with accurate orbits and plausable atmospheres using the power of MATH. Dumps the result to a json file.
