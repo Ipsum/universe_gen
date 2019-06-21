@@ -1,6 +1,7 @@
 #ifndef __BUILD_WORLD_H__
 #define __BUILD_WORLD_H__
 
+#include <stdint.h>
 
 #define UNIVERSE_SIZE 5
 #define MAX_PLANETS 4
@@ -10,6 +11,29 @@
 
 #define SUCCESS 0
 #define ERROR 1
+
+typedef struct {
+    struct {
+        uint64_t max;
+        uint64_t min;
+    } solarsystems;
+    struct {
+        uint64_t max;
+        uint64_t min;
+    } planets;
+} UniverseConfig_t;
+
+#define UNIVERSE_CONFIG_DEFAULT_INITIALIZER_T \
+{                    \
+    .solarsystems = { \
+        .min = 5,     \
+        .max = 5      \
+    },                \
+    .planets = {      \
+        .min = 0,     \
+        .max = 20     \
+    }                 \
+}
 
 typedef enum {
     RED,
@@ -62,10 +86,12 @@ typedef struct {
 } Universe_t;
 
 
-void dump_json(const char *filename, Universe_t *universe);
-int build_links(Universe_t* universe);
-Universe_t* build_universe(void);
+Universe_t* build_universe(const char* universe_name, 
+                           const unsigned int seed, 
+                           UniverseConfig_t* config);
 void print_universe(Universe_t *universe);
+
+int build_links(Universe_t* universe);
 Node_t* choose_random(Universe_t* universe);
 int add_node(Universe_t* universe, Node_t* new_node);
 int pair_nodes(Node_t* source, Node_t* destination);

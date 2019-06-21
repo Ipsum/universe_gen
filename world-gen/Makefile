@@ -1,10 +1,15 @@
 LDFLAGS+=-lm
 
-build_world :
+.PHONY: run clean all
 
-run : build_world
-	./build_world
+universe_to_json : universe.o
+
+run : universe_to_json
+	@./$< -
+
+all : run
 
 clean :
-	$(RM) build_world
+	$(RM) *.o
+	$(RM) universe_to_json
 
